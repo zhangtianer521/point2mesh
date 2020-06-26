@@ -11,7 +11,7 @@ dependencies:
   - pytorch=1.4.0
   - torchvision=0.5.0
   - fvcore=0.1
-  - pytorch3d=0.2.0
+  - pytorch3d=0.1.0
   - pip
   - pip:
     - pytest==5.4.2

@@ -43,9 +43,12 @@ for i in range(opts.iterations):
         recon_xyz, recon_normals = sample_surface(part_mesh.main_mesh.faces, part_mesh.main_mesh.vs.unsqueeze(0), num_samples)
         # calc chamfer loss w/ normals
         recon_xyz, recon_normals = recon_xyz.type(options.dtype()), recon_normals.type(options.dtype())
-        xyz_chamfer_loss, normals_chamfer_loss = chamfer_distance(recon_xyz, input_xyz, x_normals=recon_normals, y_normals=input_normals,
-                                              unoriented=opts.unoriented)
-        loss = (xyz_chamfer_loss + (opts.ang_wt * normals_chamfer_loss))
+        # xyz_chamfer_loss, normals_chamfer_loss = chamfer_distance(recon_xyz, input_xyz, x_normals=recon_normals, y_normals=input_normals,
+        #                                       unoriented=opts.unoriented)
+        # loss = (xyz_chamfer_loss + (opts.ang_wt * normals_chamfer_loss))
+        xyz_chamfer_loss, normals_chamfer_loss = chamfer_distance(recon_xyz, input_xyz,
+                                                                  unoriented=opts.unoriented)
+        loss = xyz_chamfer_loss
         if opts.local_non_uniform > 0:
             loss += opts.local_non_uniform * local_nonuniform_penalty(part_mesh.main_mesh).float()
         loss.backward()
